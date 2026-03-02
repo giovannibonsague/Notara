@@ -3,38 +3,67 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>notara — Thank You!</title>
+<title>notara — Download</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --aqua: #2EC4B6; --aqua-light: #4ECDC4; --bg: #0a1210;
-    --surface: #111e1d; --dark: #e8f5f4; --gray: #6b8a87;
-    --border: rgba(46,196,182,0.12); --btn-text: #0a1210;
+    --aqua: #2EC4B6; --aqua-light: #4ECDC4; --aqua-pale: rgba(46,196,182,0.15);
+    --bg: #0a1210; --surface: #111e1d; --surface2: #162220;
+    --dark: #e8f5f4; --gray: #6b8a87; --border: rgba(46,196,182,0.12); --btn-text: #0a1210;
   }
   @media (prefers-color-scheme: light) {
-    :root { --bg: #F7FFFE; --surface: #ffffff; --dark: #0D2B29; --gray: #8A9B99; --border: rgba(46,196,182,0.15); --btn-text: #ffffff; }
+    :root { --bg: #F7FFFE; --surface: #ffffff; --surface2: #edfaf9; --dark: #0D2B29; --gray: #8A9B99; --border: rgba(46,196,182,0.15); --btn-text: #ffffff; --aqua-pale: #CBFAF7; }
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
-  .card { background: var(--surface); border-radius: 28px; padding: 56px 48px; max-width: 480px; width: 100%; text-align: center; border: 1px solid var(--border); }
-  .icon { font-size: 3.5rem; margin-bottom: 24px; }
-  h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; letter-spacing: -0.04em; margin-bottom: 12px; color: var(--dark); }
-  h1 span { color: var(--aqua); }
-  p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; margin-bottom: 32px; }
-  .btn { background: var(--aqua); color: var(--btn-text); padding: 14px 32px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: all 0.2s; }
-  .btn:hover { background: var(--aqua-light); transform: translateY(-2px); }
-  .divider { height: 1px; background: var(--border); margin: 32px 0; }
-  .note { font-size: 0.8rem; color: var(--gray); }
+  .card { background: var(--surface); border-radius: 28px; padding: 56px 48px; max-width: 500px; width: 100%; text-align: center; border: 1px solid var(--border); }
+  .icon { font-size: 3.5rem; margin-bottom: 20px; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .logo .not { color: var(--aqua-light); }
+  .logo .ara { color: var(--aqua); }
+  h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.03em; margin-bottom: 10px; color: var(--dark); }
+  p { color: var(--gray); font-size: 0.92rem; line-height: 1.7; margin-bottom: 32px; }
+  .os-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+  .os-btn { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--surface2); border: 1.5px solid var(--border); color: var(--dark); padding: 13px 16px; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; }
+  .os-btn:hover { border-color: var(--aqua); transform: translateY(-1px); }
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .what-you-have { text-align: left; margin-bottom: 24px; }
+  .what-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 14px; }
+  .what-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--dark); margin-bottom: 10px; }
+  .what-item:last-child { margin-bottom: 0; }
+  .check { width: 18px; height: 18px; background: var(--aqua-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .note { font-size: 0.78rem; color: var(--gray); line-height: 1.6; }
+  .note a { color: var(--aqua); text-decoration: none; }
 </style>
 </head>
 <body>
   <div class="card">
     <div class="icon">🎉</div>
-    <h1>You're all set, <span>thanks!</span></h1>
-    <p>Your payment was successful. Check your email for your download link. Welcome to Notara — go ace those exams!</p>
-    <a href="index.html" class="btn">Back to Home</a>
+    <div class="logo"><span class="not">not</span><span class="ara">ara</span></div>
+    <h1>Payment confirmed!</h1>
+    <p>You're all set. Download Notara below and start studying smarter today.</p>
+
+    <div class="os-buttons">
+      <a href="YOUR_WINDOWS_DOWNLOAD_LINK" class="os-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 5.5L11 4v7.5H3V5.5zM3 12.5h8V20l-8-1.5V12.5zM12 3.5l9-1.5v9h-9V3.5zM12 12h9v9l-9-1.5V12z" fill="currentColor"/></svg>
+        Windows
+      </a>
+      <a href="YOUR_MAC_DOWNLOAD_LINK" class="os-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18.7 14.4c-.4 1-.9 1.9-1.5 2.7-.8 1.1-1.5 1.8-2 2.1-.8.7-1.7 1.1-2.6 1.1-.7 0-1.5-.2-2.3-.6-.8-.4-1.6-.6-2.3-.6-.7 0-1.5.2-2.3.6-.8.4-1.5.6-2.1.6-.9 0-1.8-.4-2.7-1.1-.6-.5-1.3-1.2-2.1-2.3-.8-1.1-1.5-2.4-2-3.9-.5-1.5-.8-3-.8-4.5 0-1.6.4-3 1.1-4.2.6-1 1.4-1.8 2.4-2.3 1-.6 2-.8 3.1-.8 1.1 0 2.1.3 3.2.8l1 .5c.4.2.8.3 1.3.3.4 0 .8-.1 1.3-.3l1.2-.5c1-.4 2-.6 3-.5.8 0 1.6.2 2.3.5.7.3 1.3.7 1.8 1.3-.6.4-1.1.9-1.5 1.5-.4.7-.6 1.4-.6 2.2 0 .9.2 1.7.7 2.4.4.7 1 1.2 1.7 1.5-.2.5-.4 1-.6 1.5zM14.5 1c0 .7-.2 1.3-.6 2-.4.7-.9 1.2-1.5 1.6-.6.4-1.2.6-1.8.5 0-.6.2-1.3.5-1.9.4-.7.9-1.2 1.5-1.6.6-.4 1.2-.6 1.9-.6z" fill="currentColor"/></svg>
+        Mac
+      </a>
+    </div>
+
     <div class="divider"></div>
-    <p class="note">Didn't get an email? Check your spam folder or contact us at support@notara.school</p>
+
+    <div class="what-you-have">
+      <div class="what-title">What's included</div>
+      <div class="what-item"><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Full access to all features — no limits</div>
+      <div class="what-item"><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Works offline — no internet needed</div>
+      <div class="what-item"><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All future updates free forever</div>
+    </div>
+
+    <p class="note">Need help? <a href="mailto:giovannibonsague@gmail.com">Contact support</a> and we'll get back to you.</p>
   </div>
 </body>
 </html>
