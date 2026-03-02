@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>notara — Thank You!</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --aqua: #2EC4B6; --aqua-light: #4ECDC4; --bg: #0a1210;
+    --surface: #111e1d; --dark: #e8f5f4; --gray: #6b8a87;
+    --border: rgba(46,196,182,0.12); --btn-text: #0a1210;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #F7FFFE; --surface: #ffffff; --dark: #0D2B29; --gray: #8A9B99; --border: rgba(46,196,182,0.15); --btn-text: #ffffff; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+  .card { background: var(--surface); border-radius: 28px; padding: 56px 48px; max-width: 480px; width: 100%; text-align: center; border: 1px solid var(--border); }
+  .icon { font-size: 3.5rem; margin-bottom: 24px; }
+  h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.2rem; letter-spacing: -0.04em; margin-bottom: 12px; color: var(--dark); }
+  h1 span { color: var(--aqua); }
+  p { color: var(--gray); font-size: 0.95rem; line-height: 1.7; margin-bottom: 32px; }
+  .btn { background: var(--aqua); color: var(--btn-text); padding: 14px 32px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .btn:hover { background: var(--aqua-light); transform: translateY(-2px); }
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+  .note { font-size: 0.8rem; color: var(--gray); }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎉</div>
+    <h1>You're all set, <span>thanks!</span></h1>
+    <p>Your payment was successful. Check your email for your download link. Welcome to Notara — go ace those exams!</p>
+    <a href="index.html" class="btn">Back to Home</a>
+    <div class="divider"></div>
+    <p class="note">Didn't get an email? Check your spam folder or contact us at support@notara.school</p>
+  </div>
+</body>
+</html>
