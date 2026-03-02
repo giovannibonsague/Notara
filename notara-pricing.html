@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>notara — Pricing</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --aqua: #2EC4B6;
+    --aqua-light: #4ECDC4;
+    --aqua-pale: rgba(46,196,182,0.15);
+    --aqua-dark: #1A9E92;
+    --bg: #0a1210;
+    --surface: #111e1d;
+    --surface2: #162220;
+    --dark: #e8f5f4;
+    --gray: #6b8a87;
+    --border: rgba(46,196,182,0.12);
+    --nav-bg: rgba(10,18,16,0.85);
+    --btn-text: #0a1210;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #F7FFFE;
+      --surface: #ffffff;
+      --surface2: #edfaf9;
+      --dark: #0D2B29;
+      --gray: #8A9B99;
+      --border: rgba(46,196,182,0.15);
+      --nav-bg: rgba(255,255,255,0.85);
+      --btn-text: #ffffff;
+      --aqua-pale: #CBFAF7;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); overflow-x: hidden; min-height: 100vh; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--aqua-light); letter-spacing: -0.03em; text-decoration: none; }
+  .logo span { color: var(--aqua); }
+  nav ul { display: flex; gap: 36px; list-style: none; }
+  nav ul a { text-decoration: none; color: var(--dark); font-size: 0.9rem; font-weight: 500; opacity: 0.5; transition: opacity 0.2s; }
+  nav ul a:hover { opacity: 1; }
+  nav ul a.active { opacity: 1; color: var(--aqua); font-weight: 600; }
+  .nav-cta { background: var(--aqua); color: var(--btn-text) !important; opacity: 1 !important; padding: 10px 22px; border-radius: 100px; font-weight: 600 !important; }
+  .nav-cta:hover { background: var(--aqua-light) !important; }
+
+  .page-hero {
+    padding: 160px 60px 80px; text-align: center;
+    background: var(--bg); position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(46,196,182,0.07) 0%, transparent 70%);
+  }
+  .page-hero::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(46,196,182,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(46,196,182,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+  .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aqua); margin-bottom: 16px; position: relative; z-index: 1; }
+  .page-hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.8rem, 5vw, 4.5rem); letter-spacing: -0.04em; color: var(--dark); margin-bottom: 16px; position: relative; z-index: 1; line-height: 1.05; }
+  .page-hero p { color: var(--gray); font-size: 1.05rem; max-width: 480px; margin: 0 auto; line-height: 1.7; position: relative; z-index: 1; }
+
+  .pricing-section { padding: 60px 60px 100px; display: flex; flex-direction: column; align-items: center; background: var(--bg); }
+
+  .pricing-card { background: var(--surface); border-radius: 32px; padding: 56px 52px; border: 2px solid var(--aqua); box-shadow: 0 30px 80px rgba(46,196,182,0.1); max-width: 440px; width: 100%; position: relative; animation: fadeUp 0.6s ease both; }
+  .one-time-badge { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); background: var(--aqua); color: var(--btn-text); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 7px 20px; border-radius: 100px; white-space: nowrap; }
+  .price-block { text-align: center; margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+  .price-amount { font-family: 'Syne', sans-serif; font-size: 6rem; font-weight: 800; color: var(--dark); letter-spacing: -0.05em; line-height: 1; }
+  .price-amount sup { font-size: 2.5rem; vertical-align: super; }
+  .price-note { color: var(--aqua); font-size: 0.9rem; font-weight: 600; margin-top: 8px; }
+  .price-sub { color: var(--gray); font-size: 0.82rem; margin-top: 4px; }
+
+  .features-list { list-style: none; margin-bottom: 36px; }
+  .features-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.92rem; color: var(--dark); padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .features-list li:last-child { border-bottom: none; }
+  .check { width: 20px; height: 20px; background: var(--aqua-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .feat-title { font-weight: 600; display: block; }
+  .feat-desc { color: var(--gray); font-size: 0.82rem; display: block; margin-top: 1px; }
+
+  .btn-primary { background: var(--aqua); color: var(--btn-text); padding: 16px 32px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.05rem; border: none; cursor: pointer; transition: all 0.2s; width: 100%; box-shadow: 0 8px 30px rgba(46,196,182,0.25); display: block; text-align: center; text-decoration: none; }
+  .btn-primary:hover { background: var(--aqua-light); transform: translateY(-2px); }
+
+  .payment-methods { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); text-align: center; }
+  .payment-note { font-size: 0.75rem; color: var(--gray); margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .payment-badges { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .pay-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; color: var(--dark); }
+
+  .comparison { margin-top: 80px; max-width: 700px; width: 100%; }
+  .comparison h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.03em; text-align: center; margin-bottom: 32px; color: var(--dark); }
+  .compare-table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 20px; overflow: hidden; }
+  .compare-table th { padding: 18px 24px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; background: var(--surface2); color: var(--gray); text-align: left; }
+  .compare-table th.highlight { background: var(--aqua); color: var(--btn-text); text-align: center; }
+  .compare-table td { padding: 16px 24px; font-size: 0.88rem; color: var(--dark); border-top: 1px solid var(--border); }
+  .compare-table td.center { text-align: center; }
+  .compare-table td.highlight-col { background: rgba(46,196,182,0.05); text-align: center; font-weight: 600; color: var(--aqua); }
+  .yes { color: var(--aqua); font-size: 1.1rem; }
+  .no { color: var(--gray); font-size: 1.1rem; opacity: 0.4; }
+
+  .faq { margin-top: 80px; max-width: 600px; width: 100%; padding-bottom: 40px; }
+  .faq h2 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; letter-spacing: -0.03em; text-align: center; margin-bottom: 32px; color: var(--dark); }
+  .faq-item { background: var(--surface); border-radius: 16px; padding: 22px 24px; margin-bottom: 12px; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.2s; }
+  .faq-item:hover { border-color: rgba(46,196,182,0.3); }
+  .faq-q { font-weight: 600; font-size: 0.92rem; color: var(--dark); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .faq-q::after { content: '+'; color: var(--aqua); font-size: 1.3rem; font-weight: 300; flex-shrink: 0; }
+  .faq-a { font-size: 0.86rem; color: var(--gray); line-height: 1.65; margin-top: 12px; display: none; }
+  .faq-item.open .faq-q::after { content: '−'; }
+  .faq-item.open .faq-a { display: block; }
+
+  footer { padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); background: var(--bg); }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a { font-size: 0.82rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--aqua); }
+  .footer-copy { font-size: 0.78rem; color: var(--gray); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 700px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .page-hero { padding: 120px 24px 60px; }
+    .pricing-section { padding: 40px 24px 80px; }
+    .pricing-card { padding: 48px 28px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">not<span>ara</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="#" class="active">Pricing</a></li>
+    <li><a href="notara-payment.html" class="nav-cta">Get Notara — $5</a></li>
+  </ul>
+</nav>
+
+<section class="page-hero">
+  <div class="section-label">Pricing</div>
+  <h1><span style="color:var(--aqua-light);">not</span><span style="color:var(--aqua);">ara</span></h1>
+  <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:1.3rem; color:var(--dark); margin-bottom:12px; position:relative; z-index:1;">One price. No surprises.</p>
+  <p>Students shouldn't pay every month just to study. Pay $5 once and Notara is yours — forever.</p>
+</section>
+
+<section class="pricing-section">
+
+  <div class="pricing-card">
+    <div class="one-time-badge">⚡ One-Time Payment</div>
+    <div class="price-block">
+      <div class="price-amount"><sup>$</sup>5</div>
+      <div class="price-note">Pay once. Own it forever.</div>
+      <div class="price-sub">No subscription. No renewal. No catch.</div>
+    </div>
+    <ul class="features-list">
+      <li><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="feat-title">Full access to all features</span><span class="feat-desc">Notes, flashcards, planner, insights — everything included</span></div></li>
+      <li><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="feat-title">Works completely offline</span><span class="feat-desc">No internet required — study anywhere, anytime</span></div></li>
+      <li><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="feat-title">All future updates included</span><span class="feat-desc">New features ship to you automatically, free</span></div></li>
+      <li><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="feat-title">Windows & Mac</span><span class="feat-desc">One purchase works on all your devices</span></div></li>
+      <li><div class="check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><span class="feat-title">Instant download</span><span class="feat-desc">Pay and start studying in under a minute</span></div></li>
+    </ul>
+    <a href="notara-payment.html" class="btn-primary">Get Notara — $5</a>
+    <div class="payment-methods">
+      <div class="payment-note">
+        <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><rect x="0.5" y="4.5" width="10" height="8" rx="2" stroke="#6b8a87" stroke-width="1.2"/><path d="M3 4.5V3.5a2.5 2.5 0 015 0v1" stroke="#6b8a87" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Secure checkout — payment info is never stored
+      </div>
+      <div class="payment-badges">
+        <div class="pay-badge"><svg width="20" height="14" viewBox="0 0 38 24" fill="none"><circle cx="14" cy="12" r="10" fill="#EB001B"/><circle cx="24" cy="12" r="10" fill="#F79E1B"/><path d="M19 5.3a10 10 0 010 13.4A10 10 0 0119 5.3z" fill="#FF5F00"/></svg>Mastercard</div>
+        <div class="pay-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#00D64F"/><path d="M12 5v1.5M12 17.5V19M8.5 8.5C8.5 7.1 10.1 6 12 6s3.5 1.1 3.5 2.5c0 1.3-1 2.1-2.5 2.5L12 11.2C10.3 11.7 8.5 12.6 8.5 14.5 8.5 16 10.1 17 12 17s3.5-1 3.5-2.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>Cash App</div>
+        <div class="pay-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19.5 6.5C19.5 9.8 17 12 13.5 12H11L10 17H7L9 7H14C17 7 19.5 5 19.5 6.5Z" fill="#009CDE"/><path d="M17 4C17 7.3 14.5 9.5 11 9.5H8.5L7.5 14.5H4.5L6.5 4.5H11.5C14.5 4.5 17 2.5 17 4Z" fill="#003087"/></svg>PayPal</div>
+        <div class="pay-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="black"/><path d="M17 8.5C17 10.5 15.5 12 13 12.5V13H15L16 15H13V18H11V15H8L9 13H11V12.5C8.5 12 7 10.5 7 8.5C7 6.5 8.8 5 12 5C15.2 5 17 6.5 17 8.5Z" fill="white"/></svg>Apple Pay</div>
+        <div class="pay-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="white"/><circle cx="10" cy="12" r="3" fill="#EA4335"/><circle cx="14" cy="12" r="3" fill="#FBBC05"/></svg>Google Pay</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="comparison">
+    <h2><span style="color:var(--aqua-light);">not</span><span style="color:var(--aqua);">ara</span> vs. the rest</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="highlight">
+            <span style="font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; letter-spacing:-0.03em;">
+              <span style="color:#ffffff;">not</span><span style="color:rgba(255,255,255,0.75);">ara</span>
+            </span>
+            <span style="display:block; font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; opacity:0.8; margin-top:2px; letter-spacing:0.04em;">$5 one-time</span>
+          </th>
+          <th>Typical apps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Price</td><td class="highlight-col">$5 once</td><td class="center" style="color:var(--gray)">$5–15/mo</td></tr>
+        <tr><td>Works offline</td><td class="highlight-col"><span class="yes">✓</span></td><td class="center"><span class="no">✗</span></td></tr>
+        <tr><td>No subscription</td><td class="highlight-col"><span class="yes">✓</span></td><td class="center"><span class="no">✗</span></td></tr>
+        <tr><td>Future updates</td><td class="highlight-col"><span class="yes">✓</span></td><td class="center" style="color:var(--gray);font-size:0.82rem;">Paid upgrade</td></tr>
+        <tr><td>All features included</td><td class="highlight-col"><span class="yes">✓</span></td><td class="center" style="color:var(--gray);font-size:0.82rem;">Premium tier</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="faq">
+    <h2>Common questions</h2>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Is it really a one-time payment?</div><div class="faq-a">Yes, completely. You pay $5 once and Notara is yours forever. No monthly charges, no annual renewals, no surprises.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">What happens when new features are added?</div><div class="faq-a">All future updates are included in your one-time purchase. When we add new features, they'll be delivered to you automatically at no extra cost.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">What platforms does Notara work on?</div><div class="faq-a">Notara is a downloadable desktop app that works on Windows and Mac. It runs fully offline so you can study without needing an internet connection.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Can I use it on multiple devices?</div><div class="faq-a">Yes — one purchase covers all your personal devices. Install it on your laptop, desktop, or both.</div></div>
+    <div class="faq-item" onclick="this.classList.toggle('open')"><div class="faq-q">Is there a free trial?</div><div class="faq-a">At $5, Notara is already priced to be a no-brainer. If you're unsure, reach out and we'll sort you out.</div></div>
+  </div>
+
+</section>
+
+<footer>
+  <a href="index.html" class="logo" style="font-size:1.2rem;">not<span>ara</span></a>
+  <div class="footer-links">
+    <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a><a href="#">Support</a>
+  </div>
+  <div class="footer-copy">© 2026 Notara. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
