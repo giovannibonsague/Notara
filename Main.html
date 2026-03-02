@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Notara — Study Smarter</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --aqua: #2EC4B6;
+    --aqua-light: #4ECDC4;
+    --aqua-pale: rgba(46,196,182,0.15);
+    --aqua-dark: #1A9E92;
+    --bg: #0a1210;
+    --surface: #111e1d;
+    --surface2: #162220;
+    --dark: #e8f5f4;
+    --gray: #6b8a87;
+    --border: rgba(46,196,182,0.12);
+    --nav-bg: rgba(10,18,16,0.85);
+    --btn-text: #0a1210;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #F7FFFE;
+      --surface: #ffffff;
+      --surface2: #edfaf9;
+      --dark: #0D2B29;
+      --gray: #8A9B99;
+      --border: rgba(46,196,182,0.15);
+      --nav-bg: rgba(255,255,255,0.85);
+      --btn-text: #ffffff;
+      --aqua-pale: #CBFAF7;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: var(--aqua-light);
+    letter-spacing: -0.03em;
+  }
+  .logo span { color: var(--aqua); }
+  nav ul {
+    display: flex; gap: 36px; list-style: none;
+  }
+  nav ul a {
+    text-decoration: none;
+    color: var(--dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  nav ul a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--aqua);
+    color: var(--btn-text) !important;
+    opacity: 1 !important;
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--aqua-light) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 60px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 40%, rgba(46,196,182,0.08) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(46,196,182,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,196,182,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 640px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(46,196,182,0.12);
+    color: var(--aqua-light);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--aqua);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--dark);
+  }
+  h1 .accent {
+    color: var(--aqua);
+    position: relative;
+  }
+  h1 .accent::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 0; right: 0;
+    height: 3px;
+    background: var(--aqua);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--gray);
+    max-width: 480px;
+    margin-bottom: 40px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; align-items: center;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--aqua);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 8px 30px rgba(46,196,182,0.35);
+  }
+  .btn-primary:hover {
+    background: var(--aqua-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(46,196,182,0.45);
+  }
+  .btn-secondary {
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 0.95rem;
+    opacity: 0.5;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover { opacity: 1; }
+
+  .hero-visual {
+    position: absolute;
+    right: 60px; top: 50%;
+    transform: translateY(-50%);
+    width: 420px;
+    animation: fadeIn 0.8s 0.4s ease both;
+  }
+
+  /* APP MOCKUP */
+  .mockup {
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow:
+      0 4px 6px rgba(0,0,0,0.2),
+      0 20px 60px rgba(46,196,182,0.1),
+      0 0 0 1px rgba(46,196,182,0.12);
+  }
+  .mockup-bar {
+    display: flex; gap: 6px; margin-bottom: 20px;
+  }
+  .mockup-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .mockup-dot:nth-child(1) { background: #ff5f57; }
+  .mockup-dot:nth-child(2) { background: #febc2e; }
+  .mockup-dot:nth-child(3) { background: #28c840; }
+
+  .mockup-header {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+  .note-card {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--aqua);
+  }
+  .note-card-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .note-line {
+    height: 6px;
+    background: rgba(46,196,182,0.15);
+    border-radius: 3px;
+    margin-bottom: 5px;
+  }
+  .note-line:last-child { width: 65%; margin-bottom: 0; }
+
+  .progress-row {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px;
+  }
+  .progress-label {
+    font-size: 0.72rem;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: var(--aqua-pale);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--aqua);
+    border-radius: 3px;
+    animation: fillBar 1.5s 1s ease both;
+  }
+  @keyframes fillBar {
+    from { width: 0; }
+  }
+  .progress-pct {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--aqua-dark);
+  }
+
+  /* STATS STRIP */
+  .stats {
+    display: flex; justify-content: center; gap: 80px;
+    padding: 48px 60px;
+    border-bottom: 1px solid rgba(46,196,182,0.1);
+    background: white;
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: var(--aqua);
+    letter-spacing: -0.04em;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 100px 60px;
+    background: var(--bg);
+  }
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--aqua);
+    margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: -0.03em;
+    color: var(--dark);
+    max-width: 520px;
+    line-height: 1.15;
+    margin-bottom: 60px;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--surface2);
+    border-radius: 20px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(46,196,182,0.08);
+    border-color: rgba(46,196,182,0.3);
+  }
+  .feature-icon {
+    width: 48px; height: 48px;
+    background: rgba(46,196,182,0.1);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+  .feature-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+  .feature-desc {
+    font-size: 0.88rem;
+    color: var(--gray);
+    line-height: 1.65;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    padding: 100px 60px;
+    background: var(--aqua);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 80% at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 80% 30%, rgba(0,0,0,0.06) 0%, transparent 60%);
+  }
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    color: white;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.75);
+    font-size: 1.05rem;
+    margin-bottom: 36px;
+    position: relative;
+  }
+  .btn-white {
+    background: white;
+    color: var(--aqua-dark);
+    padding: 14px 36px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none; cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+  footer .logo { font-size: 1.2rem; }
+  .footer-links {
+    display: flex; gap: 28px;
+  }
+  .footer-links a {
+    font-size: 0.82rem;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--aqua); }
+  .footer-copy {
+    font-size: 0.78rem;
+    color: var(--gray);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-50%) translateX(20px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .hero-visual { display: none; }
+    .features { padding: 60px 24px; }
+    .features-grid { grid-template-columns: 1fr; }
+    .stats { gap: 40px; padding: 40px 24px; flex-wrap: wrap; }
+    .cta-section { padding: 70px 24px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 30px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">not<span>ara</span></div>
+  <ul>
+    <li><a href="#">Features</a></li>
+    <li><a href="#">How it works</a></li>
+    <li><a href="#">Pricing</a></li>
+    <li><a href="#" class="nav-cta">See Pricing</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Now available for students</div>
+    <h1>Study smarter.<br/>Score <span class="accent">higher.</span></h1>
+    <p class="hero-sub">Notara is the all-in-one study tool that helps students organize notes, track progress, and ace every exam — all from one clean app.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">
+        See Pricing
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#" class="btn-secondary">
+        See how it works
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+      </div>
+      <div class="mockup-header">📚 My Study Notes</div>
+
+      <div class="note-card">
+        <div class="note-card-title">Biology — Chapter 5</div>
+        <div class="note-line" style="width:100%"></div>
+        <div class="note-line" style="width:80%"></div>
+        <div class="note-line"></div>
+      </div>
+      <div class="note-card" style="border-color:#4ECDC4">
+        <div class="note-card-title">Math — Calculus Review</div>
+        <div class="note-line" style="width:90%"></div>
+        <div class="note-line" style="width:70%"></div>
+        <div class="note-line"></div>
+      </div>
+      <div class="note-card" style="border-color:#1A9E92; opacity:0.6">
+        <div class="note-card-title">History — WW2 Timeline</div>
+        <div class="note-line" style="width:85%"></div>
+        <div class="note-line"></div>
+      </div>
+
+      <div class="progress-row">
+        <span class="progress-label">Weekly goal</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" style="width:72%"></div>
+        </div>
+        <span class="progress-pct">72%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="padding:100px 60px; background:var(--bg); text-align:center;">
+  <div class="section-label" style="text-align:center;">Pricing</div>
+  <div class="section-title" style="margin:0 auto 16px; text-align:center;">Simple, honest pricing.</div>
+  <p style="color:var(--gray); font-size:1rem; margin-bottom:48px;">No subscriptions. No hidden fees. Pay once, use forever.</p>
+
+  <div style="max-width:380px; margin:0 auto; background:var(--surface2); border-radius:28px; padding:48px 40px; border:2px solid var(--aqua); box-shadow:0 20px 60px rgba(46,196,182,0.1); position:relative;">
+    <div style="position:absolute; top:-16px; left:50%; transform:translateX(-50%); background:var(--aqua); color:var(--btn-text); font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:6px 18px; border-radius:100px;">One-Time Payment</div>
+
+    <div style="font-family:'Syne',sans-serif; font-size:4.5rem; font-weight:800; color:var(--dark); letter-spacing:-0.04em; line-height:1;">$5</div>
+    <div style="color:var(--gray); font-size:0.9rem; margin-bottom:32px; margin-top:6px;">forever — not per month</div>
+
+    <div style="text-align:left; margin-bottom:32px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:0.9rem; color:var(--dark);"><span style="color:var(--aqua); font-weight:700;">✓</span> Full access to all features</div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:0.9rem; color:var(--dark);"><span style="color:var(--aqua); font-weight:700;">✓</span> Works offline, no internet needed</div>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:0.9rem; color:var(--dark);"><span style="color:var(--aqua); font-weight:700;">✓</span> All future updates included</div>
+      <div style="display:flex; align-items:center; gap:10px; font-size:0.9rem; color:var(--dark);"><span style="color:var(--aqua); font-weight:700;">✓</span> Pay once, own it forever</div>
+    </div>
+
+    <button class="btn-primary" style="width:100%; justify-content:center; font-size:1.05rem; padding:16px;">Get Notara — $5</button>
+
+    <div style="margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
+      <p style="font-size:0.75rem; color:var(--gray); margin-bottom:14px; display:flex; align-items:center; justify-content:center; gap:6px;">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="5" width="10" height="8" rx="2" stroke="#2EC4B6" stroke-width="1.4"/><path d="M3.5 5V3.5a2.5 2.5 0 015 0V5" stroke="#2EC4B6" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Secure checkout — payment info is never stored
+      </p>
+      <div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; display:flex; align-items:center; gap:6px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M19.5 6.5C19.5 9.8 17 12 13.5 12H11L10 17H7L9 7H14C17 7 19.5 5 19.5 6.5Z" fill="#009CDE"/><path d="M17 4C17 7.3 14.5 9.5 11 9.5H8.5L7.5 14.5H4.5L6.5 4.5H11.5C14.5 4.5 17 2.5 17 4Z" fill="#003087"/></svg>
+          <span style="font-size:0.78rem; font-weight:700; color:var(--dark);">PayPal</span>
+        </div>
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; display:flex; align-items:center; gap:6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#00D64F"/><path d="M12 5v1.5M12 17.5V19M8.5 8.5C8.5 7.1 10.1 6 12 6s3.5 1.1 3.5 2.5c0 1.3-1 2.1-2.5 2.5L12 11.2C10.3 11.7 8.5 12.6 8.5 14.5 8.5 16 10.1 17 12 17s3.5-1 3.5-2.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <span style="font-size:0.78rem; font-weight:700; color:var(--dark);">Cash App</span>
+        </div>
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:7px 14px; display:flex; align-items:center; gap:6px;">
+          <svg width="28" height="18" viewBox="0 0 38 24" fill="none"><circle cx="14" cy="12" r="10" fill="#EB001B"/><circle cx="24" cy="12" r="10" fill="#F79E1B"/><path d="M19 5.3a10 10 0 010 13.4A10 10 0 0119 5.3z" fill="#FF5F00"/></svg>
+          <span style="font-size:0.78rem; font-weight:700; color:var(--dark);">Mastercard</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-label">Features</div>
+  <div class="section-title">Everything you need to study better.</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📝</div>
+      <div class="feature-title">Smart Notes</div>
+      <div class="feature-desc">Organize your notes by subject, topic, or date. Clean formatting that helps you think clearly.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Goal Tracking</div>
+      <div class="feature-desc">Set daily and weekly study goals. Stay on track with visual progress bars and streaks.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Flashcards</div>
+      <div class="feature-desc">Turn your notes into flashcards instantly. Study anywhere with our offline-ready card system.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">Exam Planner</div>
+      <div class="feature-desc">Schedule study sessions around your exam dates. Never walk into a test unprepared again.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Progress Insights</div>
+      <div class="feature-desc">See how much you've studied, what subjects need more attention, and how you're improving.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">Works Offline</div>
+      <div class="feature-desc">Notara is a downloadable app — no internet required. Your notes are always available.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to ace your exams?</h2>
+  <p>Get Notara for just $5 — one payment, yours forever.</p>
+  <button class="btn-white">See Pricing →</button>
+</section>
+
+<footer>
+  <div class="logo">not<span>ara</span></div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+    <a href="#">Support</a>
+  </div>
+  <div class="footer-copy">© 2026 Notara. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
