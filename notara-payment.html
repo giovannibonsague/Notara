@@ -4,39 +4,21 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>notara — Payment</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-<script src="https://js.stripe.com/v3/"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --aqua: #2EC4B6;
-    --aqua-light: #4ECDC4;
-    --aqua-pale: rgba(46,196,182,0.15);
-    --aqua-dark: #1A9E92;
-    --bg: #0a1210;
-    --surface: #111e1d;
-    --surface2: #162220;
-    --dark: #e8f5f4;
-    --gray: #6b8a87;
-    --border: rgba(46,196,182,0.12);
-    --nav-bg: rgba(10,18,16,0.85);
-    --btn-text: #0a1210;
+    --aqua: #2EC4B6; --aqua-light: #4ECDC4; --aqua-pale: rgba(46,196,182,0.15);
+    --bg: #0a1210; --surface: #111e1d; --surface2: #162220;
+    --dark: #e8f5f4; --gray: #6b8a87; --border: rgba(46,196,182,0.12);
+    --nav-bg: rgba(10,18,16,0.85); --btn-text: #0a1210;
   }
   @media (prefers-color-scheme: light) {
-    :root {
-      --bg: #F7FFFE; --surface: #ffffff; --surface2: #edfaf9;
-      --dark: #0D2B29; --gray: #8A9B99; --border: rgba(46,196,182,0.15);
-      --nav-bg: rgba(255,255,255,0.85); --btn-text: #ffffff; --aqua-pale: #CBFAF7;
-    }
+    :root { --bg: #F7FFFE; --surface: #ffffff; --surface2: #edfaf9; --dark: #0D2B29; --gray: #8A9B99; --border: rgba(46,196,182,0.15); --nav-bg: rgba(255,255,255,0.85); --btn-text: #ffffff; --aqua-pale: #CBFAF7; }
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; }
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px 60px; background: var(--nav-bg); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 20px 60px; background: var(--nav-bg); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
   .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--aqua-light); letter-spacing: -0.03em; text-decoration: none; }
   .logo span { color: var(--aqua); }
   nav ul { display: flex; gap: 36px; list-style: none; }
@@ -45,69 +27,57 @@
   nav ul a.active { opacity: 1; color: var(--aqua); font-weight: 600; }
 
   .page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 24px 80px; }
+  .container { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 14px; }
 
-  .payment-container { width: 100%; max-width: 480px; }
+  /* Order summary */
+  .order-card { background: var(--surface); border-radius: 20px; padding: 24px 28px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .order-left { display: flex; align-items: center; gap: 14px; }
+  .order-icon { width: 48px; height: 48px; background: var(--aqua-pale); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+  .order-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; }
+  .order-sub { font-size: 0.78rem; color: var(--gray); margin-top: 2px; }
+  .order-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--aqua); letter-spacing: -0.04em; }
 
-  .order-summary {
-    background: var(--surface); border-radius: 20px; padding: 28px;
-    border: 1px solid var(--border); margin-bottom: 16px;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  }
-  .order-info { display: flex; align-items: center; gap: 16px; }
-  .order-icon { width: 52px; height: 52px; background: var(--aqua-pale); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
-  .order-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--dark); }
-  .order-desc { font-size: 0.8rem; color: var(--gray); margin-top: 3px; }
-  .order-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--aqua); letter-spacing: -0.04em; flex-shrink: 0; }
-  .order-price span { font-size: 1rem; font-weight: 600; opacity: 0.7; }
-
+  /* Payment card */
   .payment-card { background: var(--surface); border-radius: 20px; padding: 32px; border: 1px solid var(--border); }
-  .section-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 16px; display: block; }
+  .field-label { font-size: 0.75rem; font-weight: 600; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+  .field-group { margin-bottom: 18px; }
+  .field-input { width: 100%; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--dark); outline: none; transition: border-color 0.2s; }
+  .field-input:focus { border-color: var(--aqua); }
+  .field-input::placeholder { color: var(--gray); opacity: 0.5; }
 
-  .form-group { margin-bottom: 16px; }
-  .form-label { font-size: 0.78rem; font-weight: 600; color: var(--gray); margin-bottom: 7px; display: block; }
-  .form-input {
-    width: 100%; background: var(--surface2); border: 1.5px solid var(--border);
-    border-radius: 10px; padding: 12px 16px; font-family: 'DM Sans', sans-serif;
-    font-size: 0.92rem; color: var(--dark); transition: border-color 0.2s; outline: none;
-  }
-  .form-input:focus { border-color: var(--aqua); }
-  .form-input::placeholder { color: var(--gray); opacity: 0.5; }
+  /* Stripe element */
+  .stripe-field { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 16px; transition: border-color 0.2s; }
+  .stripe-field.focused { border-color: var(--aqua); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  /* Stripe Element container */
-  #payment-element {
-    background: var(--surface2);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    transition: border-color 0.2s;
-  }
-  #payment-element:focus-within { border-color: var(--aqua); }
+  /* Pay button */
+  .pay-btn { width: 100%; background: var(--aqua); color: var(--btn-text); padding: 16px; border-radius: 12px; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 8px 30px rgba(46,196,182,0.3); display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; }
+  .pay-btn:hover:not(:disabled) { background: var(--aqua-light); transform: translateY(-2px); }
+  .pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .btn-pay {
-    width: 100%; background: var(--aqua); color: var(--btn-text);
-    padding: 15px; border-radius: 12px; font-family: 'Syne', sans-serif;
-    font-weight: 700; font-size: 1rem; border: none; cursor: pointer;
-    transition: all 0.2s; box-shadow: 0 8px 30px rgba(46,196,182,0.3);
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    margin-top: 20px;
-  }
-  .btn-pay:hover { background: var(--aqua-light); transform: translateY(-2px); }
-  .btn-pay:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  #error-msg { color: #ff6b6b; font-size: 0.82rem; margin-top: 10px; text-align: center; min-height: 18px; }
 
-  #error-message { color: #ff6b6b; font-size: 0.82rem; margin-top: 10px; text-align: center; min-height: 20px; }
+  .secure-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px; font-size: 0.74rem; color: var(--gray); }
 
-  .security-note { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 16px; font-size: 0.75rem; color: var(--gray); text-align: center; }
-
-  .what-you-get { background: var(--surface); border-radius: 20px; padding: 24px 28px; border: 1px solid var(--border); margin-top: 16px; }
-  .what-you-get-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 14px; }
+  /* What you get */
+  .get-card { background: var(--surface); border-radius: 20px; padding: 22px 28px; border: 1px solid var(--border); }
+  .get-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--aqua); margin-bottom: 14px; }
   .get-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; color: var(--dark); margin-bottom: 10px; }
   .get-item:last-child { margin-bottom: 0; }
   .get-check { width: 18px; height: 18px; background: var(--aqua-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-  .spinner { width: 18px; height: 18px; border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--btn-text); border-radius: 50%; animation: spin 0.6s linear infinite; display: none; }
+  /* Spinner */
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(0,0,0,0.25); border-top-color: var(--btn-text); border-radius: 50%; animation: spin 0.6s linear infinite; display: none; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  @media (max-width: 600px) { nav { padding: 16px 24px; } nav ul { display: none; } }
+  /* Loading state */
+  .loading-overlay { display: flex; align-items: center; justify-content: center; padding: 40px; color: var(--gray); font-size: 0.88rem; gap: 10px; }
+  .loading-dot { width: 6px; height: 6px; background: var(--aqua); border-radius: 50%; animation: pulse 1.2s ease infinite; }
+  .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
+
+  @media (max-width: 600px) { nav { padding: 16px 24px; } nav ul { display: none; } .field-row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -122,48 +92,57 @@
 </nav>
 
 <div class="page">
-  <div class="payment-container">
+  <div class="container">
 
-    <div class="order-summary">
-      <div class="order-info">
+    <div class="order-card">
+      <div class="order-left">
         <div class="order-icon">📚</div>
         <div>
           <div class="order-name">Notara</div>
-          <div class="order-desc">One-time purchase · Instant download · All updates included</div>
+          <div class="order-sub">One-time · All features · All updates</div>
         </div>
       </div>
-      <div class="order-price">$5<span> USD</span></div>
+      <div class="order-price">$5</div>
     </div>
 
     <div class="payment-card">
-      <span class="section-label">Payment Details</span>
-
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" id="email" placeholder="you@email.com"/>
+      <div class="field-group">
+        <label class="field-label">Email</label>
+        <input class="field-input" type="email" id="email" placeholder="you@email.com"/>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Card Information</label>
-        <div id="payment-element"></div>
+      <div class="field-group">
+        <label class="field-label">Card Number</label>
+        <div class="stripe-field" id="card-number"></div>
       </div>
 
-      <button class="btn-pay" id="pay-btn">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 5V4a3.5 3.5 0 017 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Expiry</label>
+          <div class="stripe-field" id="card-expiry"></div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">CVC</label>
+          <div class="stripe-field" id="card-cvc"></div>
+        </div>
+      </div>
+
+      <button class="pay-btn" id="pay-btn">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="1" y="5" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M4.5 5V4a3.5 3.5 0 017 0v1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         <span id="btn-text">Pay $5 — Get Notara</span>
         <div class="spinner" id="spinner"></div>
       </button>
 
-      <div id="error-message"></div>
+      <div id="error-msg"></div>
 
-      <div class="security-note">
-        <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><rect x="0.5" y="4.5" width="10" height="8" rx="2" stroke="#6b8a87" stroke-width="1.2"/><path d="M3 4.5V3.5a2.5 2.5 0 015 0v1" stroke="#6b8a87" stroke-width="1.2" stroke-linecap="round"/></svg>
-        256-bit SSL encryption · Payment info is never stored
+      <div class="secure-note">
+        <svg width="10" height="12" viewBox="0 0 11 13" fill="none"><rect x="0.5" y="4.5" width="10" height="8" rx="2" stroke="#6b8a87" stroke-width="1.2"/><path d="M3 4.5V3.5a2.5 2.5 0 015 0v1" stroke="#6b8a87" stroke-width="1.2" stroke-linecap="round"/></svg>
+        256-bit SSL · Powered by Stripe · Never stored
       </div>
     </div>
 
-    <div class="what-you-get">
-      <div class="what-you-get-title">What you get</div>
+    <div class="get-card">
+      <div class="get-title">What you get</div>
       <div class="get-item"><div class="get-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Instant download link sent to your email</div>
       <div class="get-item"><div class="get-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Full access to all features — no limits</div>
       <div class="get-item"><div class="get-check"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#2EC4B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All future updates free forever</div>
@@ -173,76 +152,83 @@
   </div>
 </div>
 
+<script src="https://js.stripe.com/v3/" onload="initPayment()" onerror="document.getElementById('error-msg').textContent='Failed to load payment system. Please refresh.'"></script>
 <script>
-  window.addEventListener('load', async function() {
-    const stripe = Stripe('pk_test_51SPpT2RUWs6riiEWLwROTmEiFh1RPfQnFvsltopEtyM2xNOUXSKfa9pDfKk44xOYMePl9kOBqqDSXZwlWLL9gVAX00jPiAandO');
+  function initPayment() {
+    const PUBLISHABLE_KEY = 'pk_test_51SPpT2RUWs6riiEWLwROTmEiFh1RPfQnFvsltopEtyM2xNOUXSKfa9pDfKk44xOYMePl9kOBqqDSXZwlWLL9gVAX00jPiAandO';
 
-    // Fetch client secret from serverless function
-    const res = await fetch('/api/create-payment-intent', { method: 'POST' });
-    const { clientSecret, error: fetchError } = await res.json();
+  const stripe = Stripe(PUBLISHABLE_KEY);
+  const elements = stripe.elements({
+    fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&display=swap' }]
+  });
 
-    if (fetchError) {
-      document.getElementById('error-message').textContent = fetchError;
-      return;
-    }
+  const style = {
+    base: {
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: '15px',
+      color: '#e8f5f4',
+      '::placeholder': { color: '#6b8a87' },
+    },
+    invalid: { color: '#ff6b6b' }
+  };
 
-    const elements = stripe.elements({
-      clientSecret,
-      appearance: {
-        theme: 'night',
-        variables: {
-          colorPrimary: '#2EC4B6',
-          colorBackground: '#162220',
-          colorText: '#e8f5f4',
-          colorDanger: '#ff6b6b',
-          fontFamily: 'DM Sans, sans-serif',
-          borderRadius: '10px',
-          colorTextPlaceholder: '#6b8a87',
+  const cardNumber = elements.create('cardNumber', { style });
+  const cardExpiry = elements.create('cardExpiry', { style });
+  const cardCvc = elements.create('cardCvc', { style });
+
+  cardNumber.mount('#card-number');
+  cardExpiry.mount('#card-expiry');
+  cardCvc.mount('#card-cvc');
+
+  // Focus border effect
+  [cardNumber, cardExpiry, cardCvc].forEach((el, i) => {
+    const ids = ['card-number', 'card-expiry', 'card-cvc'];
+    el.on('focus', () => document.getElementById(ids[i]).classList.add('focused'));
+    el.on('blur', () => document.getElementById(ids[i]).classList.remove('focused'));
+  });
+
+  document.getElementById('pay-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('pay-btn');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('spinner');
+    const errorMsg = document.getElementById('error-msg');
+    const email = document.getElementById('email').value.trim();
+
+    if (!email) { errorMsg.textContent = 'Please enter your email.'; return; }
+
+    btn.disabled = true;
+    btnText.textContent = 'Processing...';
+    spinner.style.display = 'block';
+    errorMsg.textContent = '';
+
+    try {
+      const res = await fetch('/api/create-payment-intent', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
+      const { clientSecret, error: apiError } = await res.json();
+
+      if (apiError) throw new Error(apiError);
+
+      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardNumber,
+          billing_details: { email }
         },
-        rules: {
-          '.Input': { border: '1.5px solid rgba(46,196,182,0.12)' },
-          '.Input:focus': { border: '1.5px solid #2EC4B6' },
-        }
-      },
-      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap' }]
-    });
-
-    const paymentElement = elements.create('payment');
-    paymentElement.mount('#payment-element');
-
-    document.getElementById('pay-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('pay-btn');
-      const btnText = document.getElementById('btn-text');
-      const spinner = document.getElementById('spinner');
-      const errorDiv = document.getElementById('error-message');
-      const email = document.getElementById('email').value;
-
-      if (!email) {
-        errorDiv.textContent = 'Please enter your email address.';
-        return;
-      }
-
-      btn.disabled = true;
-      btnText.textContent = 'Processing...';
-      spinner.style.display = 'block';
-      errorDiv.textContent = '';
-
-      const { error } = await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: window.location.origin + '/notara-success.html',
-          receipt_email: email,
-        }
+        receipt_email: email
       });
 
-      if (error) {
-        errorDiv.textContent = error.message;
-        btn.disabled = false;
-        btnText.textContent = 'Pay $5 — Get Notara';
-        spinner.style.display = 'none';
+      if (error) throw new Error(error.message);
+
+      if (paymentIntent.status === 'succeeded') {
+        window.location.href = '/notara-success.html';
       }
-    });
+
+    } catch (err) {
+      errorMsg.textContent = err.message;
+      btn.disabled = false;
+      btnText.textContent = 'Pay $5 — Get Notara';
+      spinner.style.display = 'none';
+    }
   });
+  } // end initPayment
 </script>
 
 </body>
